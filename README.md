@@ -4,6 +4,12 @@ Welcome to the **Intelligent Test Plan Agent**, a premium, automated QA assistan
 
 Built with a lightning-fast FastAPI backend, an aesthetic Glassmorphism UI, and powerful Large Language Models (LLMs), this tool eliminates hours of manual QA documentation overhead.
 
+<p align="center">
+  <img src="assets/ui-screenshot.png" alt="Intelligent Test Plan Agent Dashboard UI" width="800">
+  <br>
+  <em>(Above: The aesthetic Glassmorphism dashboard)</em>
+</p>
+
 ---
 
 ## 🌟 Key Features
@@ -12,6 +18,12 @@ Built with a lightning-fast FastAPI backend, an aesthetic Glassmorphism UI, and 
 *   **Template Parsing**: Reads corporate QA standards directly from a local `testplan.pdf` file to ensure the AI follows your exact organizational structure.
 *   **AI-Powered Generation**: Leverages either ultra-fast **Groq Cloud (Llama 3)** or **Local Ollama** to write deep, analytical, and highly structured test cases, boundary tests, and edge case analyses.
 *   **Real-time Streaming**: Watch your test plan generate live in the browser using Server-Sent Events (SSE).
+
+<p align="center">
+  <img src="assets/test-plan-screenshot.png" alt="Generated Test Plan Preview" width="800">
+  <br>
+  <em>(Above: Example of a generated test plan rendered with syntax highlighting)</em>
+</p>
 *   **Premium UI/UX**: A modern, responsive interface utilizing Tailwind CSS, Lucide Icons, frosted-glass aesthetics, and dynamic micro-animations.
 *   **History Dashboard**: Automatically saves all generations to a local SQLite database, allowing you to instantly reload past test plans.
 *   **Multi-format Export**: Export your generated test plans seamlessly to **PDF**, **DOCX**, or copy raw **Markdown** to your clipboard.
