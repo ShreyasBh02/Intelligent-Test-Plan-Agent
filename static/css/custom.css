@@ -1,0 +1,151 @@
+/* Intelligent Test Plan Agent - Premium Styles */
+
+/* Base Styles & Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Animations */
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; transform: translateY(-10px); }
+}
+
+.toast {
+    animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.toast.hiding {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
+    50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.6); }
+}
+
+.generating {
+    animation: pulseGlow 2s infinite;
+    cursor: wait !important;
+    opacity: 0.8 !important;
+}
+
+/* Tab Management */
+.tab-btn.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-bottom: 2px solid #6366f1;
+}
+
+/* Premium Markdown Styling */
+.markdown-body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.7;
+    font-size: 15px;
+    color: #e2e8f0;
+}
+.markdown-body h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 0.5rem;
+}
+.markdown-body h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: #a855f7;
+}
+.markdown-body h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: #818cf8;
+}
+.markdown-body p {
+    margin-bottom: 1.25rem;
+}
+.markdown-body ul, .markdown-body ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+.markdown-body li {
+    margin-bottom: 0.5rem;
+}
+.markdown-body strong {
+    color: #fff;
+    font-weight: 600;
+}
+.markdown-body code {
+    background-color: rgba(0,0,0,0.3);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875em;
+    color: #93c5fd;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.markdown-body pre code {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    color: inherit;
+}
+.markdown-body pre {
+    background-color: #0b0f19;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+.markdown-body table {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    border-collapse: collapse;
+}
+.markdown-body th, .markdown-body td {
+    padding: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+}
+.markdown-body th {
+    background-color: rgba(0,0,0,0.2);
+    font-weight: 600;
+    color: #fff;
+}
+.markdown-body blockquote {
+    border-left: 4px solid #6366f1;
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    font-style: italic;
+    color: #94a3b8;
+    background: rgba(99, 102, 241, 0.05);
+    padding: 1rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+}
