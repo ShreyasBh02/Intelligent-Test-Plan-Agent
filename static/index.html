@@ -37,6 +37,9 @@
     <div class="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/20 blur-[120px] rounded-full pointer-events-none z-0"></div>
     <div class="fixed bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-secondary/20 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
+    <!-- Subtle Geometric Grid Background -->
+    <div class="fixed inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none z-0"></div>
+
     <!-- Navigation -->
     <nav class="relative z-10 bg-glass backdrop-blur-xl border-b border-glassBorder p-4 flex justify-between items-center px-8 shadow-lg">
         <div class="text-2xl font-display font-bold flex items-center gap-3 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 cursor-pointer transition-transform hover:scale-105" onclick="switchTab('dashboard-view')">
@@ -221,25 +224,90 @@
         </div>
 
         <!-- HISTORY VIEW -->
-        <div id="history-view" class="hidden w-full h-full p-10 overflow-y-auto bg-black/20">
+        <div id="history-view" class="hidden w-full h-full p-10 overflow-y-auto bg-black/20 relative">
             <div class="max-w-5xl mx-auto">
-                <div class="flex items-center justify-between mb-8">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-8 relative z-10">
                     <div class="flex items-center gap-3">
                         <div class="bg-secondary/20 p-2 rounded-lg"><i data-lucide="history" class="text-secondary h-6 w-6"></i></div>
                         <h1 class="font-display text-3xl font-bold text-white">Generation History</h1>
                     </div>
-                    <button class="bg-glass border border-glassBorder hover:bg-white/10 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
-                        <i data-lucide="refresh-cw" class="h-4 w-4"></i> Refresh
+                    <button id="refresh-history-btn" onclick="loadHistory()" class="bg-glass border border-glassBorder hover:bg-white/10 px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+                        <i data-lucide="refresh-cw" class="h-4 w-4"></i> <span>Refresh</span>
                     </button>
                 </div>
+
+                <!-- Stats Bar -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 relative z-10">
+                    <div class="bg-glass backdrop-blur-md p-4 rounded-xl border border-glassBorder flex items-center gap-4">
+                        <div class="p-3 rounded-lg bg-indigo-500/10 text-indigo-400">
+                            <i data-lucide="sparkles" class="h-5 w-5"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-400 font-medium uppercase tracking-wider">Total Plans</div>
+                            <div id="stats-total-plans" class="text-xl font-bold text-white">0</div>
+                        </div>
+                    </div>
+                    <div class="bg-glass backdrop-blur-md p-4 rounded-xl border border-glassBorder flex items-center gap-4">
+                        <div class="p-3 rounded-lg bg-emerald-500/10 text-emerald-400">
+                            <i data-lucide="clock" class="h-5 w-5"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-400 font-medium uppercase tracking-wider">Last Generated</div>
+                            <div id="stats-last-generated" class="text-sm font-semibold text-slate-200 truncate max-w-[180px]">-</div>
+                        </div>
+                    </div>
+                    <div class="bg-glass backdrop-blur-md p-4 rounded-xl border border-glassBorder flex items-center gap-4">
+                        <div class="p-3 rounded-lg bg-purple-500/10 text-purple-400">
+                            <i data-lucide="database" class="h-5 w-5"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-400 font-medium uppercase tracking-wider">DB Status</div>
+                            <div id="stats-db-status" class="text-sm font-semibold text-emerald-400 flex items-center gap-1.5">
+                                <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span> Connected
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search & Filters -->
+                <div class="flex flex-col sm:flex-row gap-4 mb-6 relative z-10">
+                    <div class="flex-1 relative">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4"></i>
+                        <input type="text" id="history-search-input" placeholder="Search by JIRA ID or summary..." class="w-full bg-black/30 border border-glassBorder rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                    </div>
+                    <div class="flex gap-2">
+                        <select id="history-filter-provider" class="bg-black/30 border border-glassBorder rounded-lg px-3 py-2.5 text-sm text-slate-300 outline-none focus:border-primary transition-all cursor-pointer">
+                            <option value="">All Providers</option>
+                            <option value="groq">Groq</option>
+                            <option value="ollama">Ollama</option>
+                        </select>
+                        <select id="history-filter-date" class="bg-black/30 border border-glassBorder rounded-lg px-3 py-2.5 text-sm text-slate-300 outline-none focus:border-primary transition-all cursor-pointer">
+                            <option value="">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                </div>
                 
-                <div id="history-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div id="history-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 relative z-10">
                     <!-- History cards will be loaded here -->
                 </div>
                 
-                <div class="mt-10 bg-blue-500/10 border border-blue-500/20 rounded-xl p-5 text-center">
-                    <i data-lucide="info" class="h-6 w-6 text-blue-400 mx-auto mb-2"></i>
-                    <p class="text-sm text-blue-200">The full interactive History Dashboard will be fully wired up in Phase 2!</p>
+                <!-- Premium Info Box -->
+                <div class="mt-8 bg-slate-800/40 border-l-4 border-primary rounded-r-xl p-5 relative z-10 shadow-lg">
+                    <div class="flex items-start gap-4">
+                        <div class="p-2 bg-primary/10 rounded-lg text-primary shrink-0">
+                            <i data-lucide="info" class="h-6 w-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-display font-semibold text-slate-200 text-sm mb-1">Local History DB</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                All generated test plans are securely saved locally to your SQLite database. You can view, search, and export previously generated test plans anytime.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
